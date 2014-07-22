@@ -12,7 +12,7 @@ To run, simply invoke
 ### Command-line Options
 
 | Option | Description | Example |
-|--------------------------------|
+|--------|-------------|---------|
 | help | Displays the help text | N/A |
 | jdbcUrl | A JDBC URL that defines where you want to save the output (defaults to a local SQLite table named etd.db in the current folder) | jdbc:mysql:localhost/dbName?username=user&password=password |
 | excelFile | Absolute file location to an Excel document with extra ETDs to be included (defaults to none) | /some/path/to/excel.xlsx |
