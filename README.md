@@ -1,7 +1,7 @@
 ETD Scraper
 ================
 
-This repository provides a code base for a robust ETD Scraper.
+This repository provides a code base for a robust ETD Scraper. The scraper scrapes the two ETD databases used by Virginia Tech and compiles everything into one database.  The database has a structure as listed below.
 
 ## Usage
 
@@ -37,6 +37,20 @@ The name fix allows you to resolve names such as "Irwin, Michael", "Michael Irwi
 You can have as many ```<name>``` listings as needed.
 
 **JSON format coming soon**
+
+## Database Information
+
+The following databases are currently supported: **sqlite**, **MySQL**, **PostgreSQL**
+
+Each time the scraper runs, it will create (if needed) the table structure, as well as clear out all existing contents.  The following tables are used:
+
+| Table Name | Contents |
+|------------|----------|
+| etds | Contains the ETD information, such as title, abstract, date, degree, url, and department |
+| people | Contains the names of the various people found while searching for ETDs |
+| keywords | Contains all of the various keywords in the ETDs |
+| contributors | Contains the mapping between ETD and Person, with the role of the contributor |
+| etds_keywords | Contains the mapping between ETD and keywords |
 
 ## Building from Source
 
