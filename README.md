@@ -59,6 +59,8 @@ This project utilizes Apache Maven for dependency management and building (http:
 ```
 mvn clean install
 ```
+The built artifact will be located in the target/ folder, named uber-etd-scraper-{versionNumber}.jar.  The reason there's an uber and non-uber is the uber has all of the dependencies embedded in the JAR, rather than leaving them as external dependencies (hence why it's also much larger in size).
+
 
 ## Upcoming Enhancements
 
