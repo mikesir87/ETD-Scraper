@@ -37,7 +37,7 @@ public class DefaultKeywordFactory implements KeywordFactory {
    * {@inheritDoc}
    */
   @Override
-  public Keyword generateKeyword(String keyword) {
+  public synchronized Keyword generateKeyword(String keyword) {
     String lcKeyword = keyword.toLowerCase();
     if (keywords.containsKey(lcKeyword))
       return keywords.get(lcKeyword);

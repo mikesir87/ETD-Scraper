@@ -58,9 +58,10 @@ public class DefaultPersonFactory implements PersonFactory {
     return contributor;
   }
   
-  private Person getPerson(String name) {
-    if (people.containsKey(name))
-      return people.get(name);
+  private synchronized Person getPerson(String name) {
+    String lcName = name.toLowerCase();
+    if (people.containsKey(lcName))
+      return people.get(lcName);
     
     String lastName = null;
     String firstName = null;
@@ -80,7 +81,7 @@ public class DefaultPersonFactory implements PersonFactory {
     person.setFirstName(firstName);
     person.setLastName(lastName);
     
-    people.put(name, person);
+    people.put(lcName, person);
     
     return person;
   }
