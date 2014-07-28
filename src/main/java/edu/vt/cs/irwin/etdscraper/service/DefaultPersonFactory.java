@@ -47,6 +47,7 @@ public class DefaultPersonFactory implements PersonFactory {
    */
   @Override
   public EtdContributor createPerson(Etd etd, String name, Role role) {
+    name = standardizeName(name);
     name = nameFixer.getActualName(name);
     Person person = getPerson(name);
     
@@ -70,7 +71,7 @@ public class DefaultPersonFactory implements PersonFactory {
       lastName = name.substring(0, name.indexOf(", "));
       firstName = name.substring(name.indexOf(", ") + 2);
     }
-    else {
+    else { // Since names are standardized, this gets names that are only last name
       String[] nameSplit = name.split(" ");
       lastName = nameSplit[nameSplit.length - 1];
       if (lastName.length() != name.length())
@@ -86,4 +87,15 @@ public class DefaultPersonFactory implements PersonFactory {
     return person;
   }
   
+  private String standardizeName(String name) {
+    if (name.indexOf(",") > 0)
+      return name;
+    String lastName = null, firstName = null;
+    
+    String[] nameSplit = name.split(" ");
+    lastName = nameSplit[nameSplit.length - 1];
+    if (lastName.length() != name.length())
+      firstName = name.substring(0, name.indexOf(lastName) - 1);
+    return (firstName != null) ? lastName + ", " + firstName : lastName;
+  }
 }

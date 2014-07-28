@@ -83,7 +83,7 @@ public class DefaultPersonFactoryTest {
   @Test
   public void testFirstNameFirst() {
     final String name = "Michael Irwin";
-    setExpectations(name);
+    setExpectations("Irwin, Michael");
     
     EtdContributor contributor = factory.createPerson(etd, name, Role.COCHAIR);
     
@@ -117,7 +117,7 @@ public class DefaultPersonFactoryTest {
   @Test
   public void testFirstNameFirstWithInitial() {
     final String name = "Michael S Irwin";
-    setExpectations(name);
+    setExpectations("Irwin, Michael S");
     
     EtdContributor contributor = factory.createPerson(etd, name, Role.COCHAIR);
 
@@ -134,7 +134,7 @@ public class DefaultPersonFactoryTest {
   @Test
   public void testOnlyLastName() {
     final String name = "Irwin";
-    setExpectations(name);
+    setExpectations("Irwin");
     
     EtdContributor contributor = factory.createPerson(etd, name, Role.COCHAIR);
     
@@ -152,11 +152,28 @@ public class DefaultPersonFactoryTest {
   @Test
   public void testConsecutiveLookupsForSameName() {
     final String name = "Michael Irwin";
-    setExpectations(name);
-    setExpectations(name);
+    final String adjustedName = "Irwin, Michael";
+    setExpectations(adjustedName);
+    setExpectations(adjustedName);
     
     EtdContributor contributor1 = factory.createPerson(etd, name, Role.STUDENT);
     EtdContributor contributor2 = factory.createPerson(etd, name, Role.CHAIR);
+    
+    assertThat(contributor1.getRole(), is(Role.STUDENT));
+    assertThat(contributor2.getRole(), is(Role.CHAIR));
+    assertThat(contributor1.getPerson(), 
+        is(sameInstance((Object) contributor2.getPerson())));
+  }
+  
+  @Test
+  public void testConsecutiveLookupForSameNameButDifferentFormat() {
+    String name1 = "Michael Irwin";
+    String name2 = "Irwin, Michael";
+    setExpectations(name2);
+    setExpectations(name2);
+    
+    EtdContributor contributor1 = factory.createPerson(etd, name1, Role.STUDENT);
+    EtdContributor contributor2 = factory.createPerson(etd, name2, Role.CHAIR);
     
     assertThat(contributor1.getRole(), is(Role.STUDENT));
     assertThat(contributor2.getRole(), is(Role.CHAIR));
